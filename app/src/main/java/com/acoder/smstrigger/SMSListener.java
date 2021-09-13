@@ -14,10 +14,10 @@ public class SMSListener extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO Auto-generated method stub
 
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-            Toast.makeText(context, "Service Started", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "SMS Controller Started", Toast.LENGTH_SHORT).show();
+            ApManager.onHotspot(context);
         }
 
         if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
@@ -39,12 +39,15 @@ public class SMSListener extends BroadcastReceiver {
                         String result = null;
                         switch (msgBody) {
                             case "hotspot on":
+                            case "hn":
                                 result = ApManager.onHotspot(context);
                                 break;
                             case "hotspot off":
+                            case "hf":
                                 result = ApManager.offHotspot(context);
                                 break;
                             case "status":
+                            case "st":
                                 result = ApManager.getStatus(context);
                                 break;
                         }
